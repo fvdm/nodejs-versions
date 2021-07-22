@@ -1,2 +1,60 @@
 # nodejs-versions
-The current Node.js LTS versions for use in automation scripts
+
+The current major Node.js versions for use in
+automation scripts.
+
+At the moment the list is maintained by hand.
+
+My packages are always tested against the officialy
+supported LTS (active) versions.
+
+
+## Files
+
+file             | stages
+:----------------|:------
+lts.json         | Only LTS
+lts-current.json | LTS + Current
+
+
+## Data source
+
+[Node.js release schedule](https://nodejs.org/en/about/releases/)
+
+
+## Github action
+
+Here the `lts.json` is retrieved and made available in
+`needs.lts_versions.outputs.matrix`.
+Then in the build you convert the JSON array to a matrix.
+
+
+```yml
+jobs:
+  lts_versions:
+    name: "Get versions"
+    runs-on: ubuntu-latest
+    steps:
+      - id: set-matrix
+        run: echo "::set-output name=matrix::$(curl -s https://raw.githubusercontent.com/fvdm/nodejs-versions/main/lts.json)"
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  build:
+    name: "Node"
+    needs: lts_versions
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ${{ fromJson(needs.lts_versions.outputs.matrix) }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test on Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: git fetch --prune --unshallow
+    - run: npm install
+    - run: npm test
+    - run: npm audit --production
+```
