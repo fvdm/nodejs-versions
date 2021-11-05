@@ -1,0 +1,25 @@
+{
+  "author": {
+    "name": "Franklin",
+    "email": "info@fvdm.com",
+    "url": "https://fvdm.com"
+  },
+  "name": "build",
+  "version": "0.0.1",
+  "description": "Rebuild version JSON files",
+  "main": "build.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fvdm/nodejs-version.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fvdm/nodejs-versions/issues"
+  },
+  "dependencies": {
+    "httpreq": "^0.5.2"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "license": "Unlicense"
+}
