@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm install
+      - run: rm -f package-lock.json
       - run: node build.js
       - run: git config --global user.email "buildbot@frankl.in"
       - run: git config --global user.name "Build Bot"
