@@ -19,7 +19,8 @@ lts-current.json | LTS + Current
 
 ## Data source
 
-[Node.js release schedule](https://nodejs.org/en/about/releases/)
+- [Node.js release schedule](https://nodejs.org/en/about/releases/)
+- [Node.js release.json](https://raw.githubusercontent.com/nodejs/Release/main/schedule.json)
 
 
 ## Github action
