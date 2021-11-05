@@ -2,7 +2,6 @@ on:
   workflow_dispatch:
 
 name: 'Update versions'
-description: 'Check for new Node.js releases and update the JSON files'
 
 jobs:
   build:
