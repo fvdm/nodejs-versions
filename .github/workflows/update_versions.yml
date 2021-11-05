@@ -1,0 +1,16 @@
+on: workflow_dispatch
+
+name: 'Update versions'
+description: 'Check for new Node.js releases and update the JSON files'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: 'Build'
+    steps:
+      - uses: actions/checkout@v2
+      - run: node build.js
+      - run: git add lts.json
+      - run: git add lts-current.json
+      - run: git commit -m 'Update versions'
+      - run: git push
