@@ -9,6 +9,8 @@ const { open } = require ('fs').promises;
  */
 
 async function getSchedule () {
+  console.log ('Fetching release schedule');
+
   return doRequest ({
     url: 'https://raw.githubusercontent.com/nodejs/Release/main/schedule.json',
   })
@@ -25,6 +27,8 @@ async function getSchedule () {
  */
 
 async function processVersions () {
+  console.log ('Processing versions');
+
   const data = await getSchedule();
   const today = new Date().toJSON().split ('T')[0];
 
@@ -56,6 +60,7 @@ async function processVersions () {
     result.current.push (version);
   }
 
+  // sort versions
   result.current = res.current.sort().reverse();
   result.lts = res.lts.sort().reverse();
 
@@ -93,6 +98,14 @@ async function write (filename, data) {
 
 async function updateVersions () {
   const versions = await processVersions();
+
+  console.log ('lts.json');
+  console.dir (versions.lts, { colors: true }):
+  console.log ();
+
+  console.log ('lts-current.json');
+  console.dir (versions.current, { colors: true }):
+  console.log ();
 
   write ('./lts.json', versions.lts);
   write ('./lts-current.json', versions.current);
