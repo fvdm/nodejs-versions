@@ -56,6 +56,9 @@ async function processVersions () {
     result.current.push (version);
   }
 
+  result.current = res.current.sort().reverse();
+  result.lts = res.lts.sort().reverse();
+
   return result;
 }
 
