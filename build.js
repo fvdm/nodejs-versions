@@ -100,11 +100,11 @@ async function updateVersions () {
   const versions = await processVersions();
 
   console.log ('lts.json');
-  console.dir (versions.lts, { colors: true }):
+  console.dir (versions.lts, { colors: true });
   console.log ();
 
   console.log ('lts-current.json');
-  console.dir (versions.current, { colors: true }):
+  console.dir (versions.current, { colors: true });
   console.log ();
 
   write ('./lts.json', versions.lts);
