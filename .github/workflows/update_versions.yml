@@ -15,5 +15,4 @@ jobs:
       - run: git config --global user.name "Build Bot"
       - run: git add lts.json
       - run: git add lts-current.json
-      - run: git commit -m 'Update versions' || true
-      - run: git push
+      - run: git commit -m 'Update versions' && git push || true
