@@ -26,8 +26,7 @@ async function getSchedule () {
  * @return  {Promise<object>}
  */
 
-async function processVersions () {
-  const data = await getSchedule();
+async function processVersions (data) {
   const today = new Date().toJSON().split ('T')[0];
 
   let release;
@@ -94,8 +93,7 @@ async function write (filename, data) {
  * @return  {Promise}
  */
 
-async function updateVersions () {
-  const versions = await processVersions();
+async function updateVersions (versions) {
   const stored = {
     current: require ('./lts-current.json'),
     lts: require ('./lts.json'),
@@ -126,4 +124,8 @@ async function updateVersions () {
   console.log ();
 }
 
-updateVersions();
+// Run it
+getSchedule()
+  .then (processVersions)
+  .then (updateVersions)
+;
