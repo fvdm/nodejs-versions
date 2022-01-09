@@ -79,15 +79,12 @@ async function processVersions () {
  */
 
 async function write (filename, data) {
-  try {
-    const file = await open (filename, 'w');
+  const file = await open (filename, 'w');
   
-    data = JSON.stringify (data);
-    file.writeFile (data);
-  }
-  finally {
-    return file.close();
-  }
+  data = JSON.stringify (data);
+  await file.writeFile (data);
+
+  return file.close();
 }
 
 
