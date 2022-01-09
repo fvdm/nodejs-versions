@@ -121,10 +121,10 @@ async function updateVersions (versions) {
   process.stdout.write ('lts.json          ');
 
   if (stored.lts.toString() === versions.lts.toString()) {
-    console.log ('\u001b[32mOK\u001b[0m');
+    console.log ('\u001b[1;32mOK\u001b[0m');
   }
   else {
-    console.log ('\u001b[33mOUTDATED\u001b[0m');
+    console.log ('\u001b[1;33mOUTDATED\u001b[0m');
     write ('./lts.json', versions.lts);
   }
 
@@ -135,10 +135,10 @@ async function updateVersions (versions) {
   process.stdout.write ('lts-current.json  ');
 
   if (stored.current.toString() === versions.current.toString()) {
-    console.log ('\u001b[32mOK\u001b[0m');
+    console.log ('\u001b[1;32mOK\u001b[0m');
   }
   else {
-    console.log ('\u001b[33mOUTDATED\u001b[0m');
+    console.log ('\u001b[1;33mOUTDATED\u001b[0m');
     write ('./lts-current.json', versions.current);
   }
 
