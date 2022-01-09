@@ -96,15 +96,31 @@ async function write (filename, data) {
 
 async function updateVersions () {
   const versions = await processVersions();
+  const stored = {
+    current: require ('./lts-current.json'),
+    lts: require ('./lts.json'),
+  };
 
+  console.log ();
   console.log ('lts.json');
   console.dir (versions.lts, { colors: true });
-  console.log ();
 
+  if (stored.lts.toString() === versions.lts.toString()) {
+    console.dir ('LTS versions are the same. Not updating.')
+  }
+  else {
+    write ('./lts.json', versions.lts);
+  }
+  console.log ();
   console.log ('lts-current.json');
   console.dir (versions.current, { colors: true });
-  console.log ();
 
-  write ('./lts.json', versions.lts);
-  write ('./lts-current.json', versions.current);
+  if (stored.current.toString() === versions.current.toString()) {
+    console.dir ('LTS & current versions are the same. Not updating.')
+  }
+  else {
+    write ('./lts-current.json', versions.current);
+  }
+
+  console.log ();
 }
