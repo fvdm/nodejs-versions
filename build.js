@@ -117,7 +117,7 @@ async function updateVersions (versions) {
   };
 
   // LTS
-  console.log ();
+  console.log();
   process.stdout.write ('lts.json          ');
 
   if (stored.lts.toString() === versions.lts.toString()) {
@@ -125,12 +125,13 @@ async function updateVersions (versions) {
   }
   else {
     console.log ('\u001b[33mOUTDATED\u001b[0m');
-    colorLog (versions.lts);
     write ('./lts.json', versions.lts);
   }
 
+  colorLog (versions.lts);
+  console.log();
+
   // LTS + current
-  console.log ();
   process.stdout.write ('lts-current.json  ');
 
   if (stored.current.toString() === versions.current.toString()) {
@@ -138,11 +139,11 @@ async function updateVersions (versions) {
   }
   else {
     console.log ('\u001b[33mOUTDATED\u001b[0m');
-    colorLog (versions.current);
     write ('./lts-current.json', versions.current);
   }
 
-  console.log ();
+  colorLog (versions.current);
+  console.log();
 }
 
 // Run it
