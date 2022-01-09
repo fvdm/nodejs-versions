@@ -3,6 +3,23 @@ const { open } = require ('fs').promises;
 
 
 /**
+ * Better console.log for promises
+ *
+ * @param   {mixed}           data
+ * @return  {Promise<mixed>}  data
+ */
+
+async function colorLog (data) {
+  console.dir (data, {
+    depth: null,
+    colors: true,
+  });
+
+  return data;
+}
+
+
+/**
  * Fetch current release schedule
  *
  * @return  {Promise<object>}
@@ -99,23 +116,25 @@ async function updateVersions (versions) {
     lts: require ('./lts.json'),
   };
 
+  // LTS
   console.log ();
   console.log ('lts.json');
-  console.dir (versions.lts, { colors: true });
+  colorLog (versions.lts);
 
   if (stored.lts.toString() === versions.lts.toString()) {
-    console.dir ('LTS versions are the same. Not updating.')
+    console.dir ('LTS versions are up to date.')
   }
   else {
     write ('./lts.json', versions.lts);
   }
 
+  // LTS + current
   console.log ();
   console.log ('lts-current.json');
-  console.dir (versions.current, { colors: true });
+  colorLog (versions.current);
 
   if (stored.current.toString() === versions.current.toString()) {
-    console.dir ('LTS & current versions are the same. Not updating.')
+    console.dir ('LTS & current versions are up to date.')
   }
   else {
     write ('./lts-current.json', versions.current);
@@ -128,4 +147,8 @@ async function updateVersions (versions) {
 getSchedule()
   .then (processVersions)
   .then (updateVersions)
+  .catch (err => {
+    colorLog (err);
+    process.exit (1);
+  })
 ;
