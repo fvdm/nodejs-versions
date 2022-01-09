@@ -27,8 +27,6 @@ async function getSchedule () {
  */
 
 async function processVersions () {
-  console.log ('Processing versions');
-
   const data = await getSchedule();
   const today = new Date().toJSON().split ('T')[0];
 
@@ -37,6 +35,8 @@ async function processVersions () {
     lts: [],
     current: [],
   };
+
+  console.log ('Processing versions');
 
   for (let version in data) {
     release = data[version];
