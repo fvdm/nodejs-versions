@@ -111,6 +111,7 @@ async function updateVersions () {
   else {
     write ('./lts.json', versions.lts);
   }
+
   console.log ();
   console.log ('lts-current.json');
   console.dir (versions.current, { colors: true });
@@ -124,3 +125,5 @@ async function updateVersions () {
 
   console.log ();
 }
+
+updateVersions();
