@@ -38,8 +38,9 @@ async function processVersions () {
     current: [],
   };
 
-  for (let key in data) {
-    release = data[key];
+  for (let version in data) {
+    release = data[version];
+    version = version.replace (/^v/, '');
 
     // skip future
     if (release.start > today) {
