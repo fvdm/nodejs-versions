@@ -1,5 +1,7 @@
 # nodejs-versions
 
+[![Update versions](https://github.com/fvdm/nodejs-versions/actions/workflows/update_versions.yml/badge.svg?branch=main)](https://github.com/fvdm/nodejs-versions/actions/workflows/update_versions.yml)
+
 The current major Node.js versions for use in
 automation scripts.
 
