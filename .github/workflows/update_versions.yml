@@ -1,4 +1,6 @@
 on:
+  schedule:
+    - interval: 'daily'
   workflow_dispatch:
 
 name: 'Update versions'
