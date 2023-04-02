@@ -1,4 +1,3 @@
-const { doRequest } = require ('httpreq');
 const { open } = require ('fs').promises;
 
 
@@ -28,12 +27,10 @@ async function colorLog (data) {
 async function getSchedule () {
   console.log ('Fetching release schedule');
 
-  return doRequest ({
-    url: 'https://raw.githubusercontent.com/nodejs/Release/main/schedule.json',
-  })
-    .then (res => res.body)
-    .then (JSON.parse)
-  ;
+  const url = 'https://raw.githubusercontent.com/nodejs/Release/main/schedule.json';
+  const res = await fetch( url );
+
+  return res.json();
 }
 
 

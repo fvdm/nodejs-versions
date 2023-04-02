@@ -15,9 +15,7 @@
   "bugs": {
     "url": "https://github.com/fvdm/nodejs-versions/issues"
   },
-  "dependencies": {
-    "httpreq": "^0.5.2"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">=12"
   },
