@@ -5,7 +5,7 @@
     "url": "https://fvdm.com"
   },
   "name": "build",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Rebuild version JSON files",
   "main": "build.js",
   "repository": {
@@ -17,7 +17,7 @@
   },
   "dependencies": {},
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "license": "Unlicense"
 }
