@@ -107,7 +107,7 @@ async function write ( filename, data ) {
  * @return  {Promise}
  */
 
-async function updateVersions( versions ) {
+async function updateVersions ( versions ) {
   const stored = {
     current: require( './lts-current.json' ),
     lts: require( './lts.json' ),
