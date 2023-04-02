@@ -30,6 +30,10 @@ async function getSchedule () {
   const url = 'https://raw.githubusercontent.com/nodejs/Release/main/schedule.json';
   const res = await fetch( url );
 
+  if ( ! res.ok ) {
+    throw new Error( `Error ${res.status} ${res.statusText}` );
+  }
+
   return res.json();
 }
 
