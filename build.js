@@ -1,4 +1,4 @@
-const { open } = require ('fs').promises;
+const { open } = require( 'fs' ).promises;
 
 
 /**
@@ -8,11 +8,11 @@ const { open } = require ('fs').promises;
  * @return  {Promise<mixed>}  data
  */
 
-async function colorLog (data) {
-  console.dir (data, {
+async function colorLog( data ) {
+  console.dir( data, {
     depth: null,
     colors: true,
-  });
+  } );
 
   return data;
 }
@@ -25,7 +25,7 @@ async function colorLog (data) {
  */
 
 async function getSchedule () {
-  console.log ('Fetching release schedule');
+  console.log( 'Fetching release schedule' );
 
   const url = 'https://raw.githubusercontent.com/nodejs/Release/main/schedule.json';
   const res = await fetch( url );
@@ -40,8 +40,8 @@ async function getSchedule () {
  * @return  {Promise<object>}
  */
 
-async function processVersions (data) {
-  const today = new Date().toJSON().split ('T')[0];
+async function processVersions ( data ) {
+  const today = new Date().toJSON().split( 'T' )[0];
 
   let release;
   let result = {
@@ -49,29 +49,29 @@ async function processVersions (data) {
     current: [],
   };
 
-  console.log ('Processing versions');
+  console.log( 'Processing versions' );
 
-  for (let version in data) {
+  for( let version in data ) {
     release = data[version];
-    version = version.replace (/^v/, '');
+    version = version.replace( /^v/, '' );
 
     // skip future
-    if (release.start > today) {
+    if ( release.start > today ) {
       continue;
     }
 
     // skip end of life
-    if (release.end <= today) {
+    if ( release.end <= today ) {
       continue;
     }
 
     // active LTS status
-    if (release.lts <= today) {
-      result.lts.push (version);
+    if ( release.lts <= today ) {
+      result.lts.push( version );
     }
 
     // current versions (including LTS)
-    result.current.push (version);
+    result.current.push( version );
   }
 
   // sort versions
@@ -91,11 +91,11 @@ async function processVersions (data) {
  * @return  {Promise}
  */
 
-async function write (filename, data) {
-  const file = await open (filename, 'w');
+async function write ( filename, data ) {
+  const file = await open( filename, 'w' );
   
-  data = JSON.stringify (data);
-  await file.writeFile (data);
+  data = JSON.stringify( data );
+  await file.writeFile( data );
 
   return file.close();
 }
@@ -107,48 +107,48 @@ async function write (filename, data) {
  * @return  {Promise}
  */
 
-async function updateVersions (versions) {
+async function updateVersions( versions ) {
   const stored = {
-    current: require ('./lts-current.json'),
-    lts: require ('./lts.json'),
+    current: require( './lts-current.json' ),
+    lts: require( './lts.json' ),
   };
 
   // LTS
   console.log();
-  process.stdout.write ('lts.json          ');
+  process.stdout.write( 'lts.json          ' );
 
-  if (stored.lts.toString() === versions.lts.toString()) {
-    console.log ('\u001b[1;32mOK\u001b[0m');
+  if ( stored.lts.toString() === versions.lts.toString() ) {
+    console.log( '\u001b[1;32mOK\u001b[0m' );
   }
   else {
-    console.log ('\u001b[1;33mOUTDATED\u001b[0m');
-    write ('./lts.json', versions.lts);
+    console.log( '\u001b[1;33mOUTDATED\u001b[0m' );
+    write( './lts.json', versions.lts );
   }
 
-  colorLog (versions.lts);
+  colorLog( versions.lts );
   console.log();
 
   // LTS + current
-  process.stdout.write ('lts-current.json  ');
+  process.stdout.write( 'lts-current.json  ' );
 
-  if (stored.current.toString() === versions.current.toString()) {
-    console.log ('\u001b[1;32mOK\u001b[0m');
+  if ( stored.current.toString() === versions.current.toString() ) {
+    console.log( '\u001b[1;32mOK\u001b[0m' );
   }
   else {
-    console.log ('\u001b[1;33mOUTDATED\u001b[0m');
-    write ('./lts-current.json', versions.current);
+    console.log( '\u001b[1;33mOUTDATED\u001b[0m' );
+    write( './lts-current.json', versions.current );
   }
 
-  colorLog (versions.current);
+  colorLog( versions.current );
   console.log();
 }
 
 // Run it
 getSchedule()
-  .then (processVersions)
-  .then (updateVersions)
-  .catch (err => {
-    colorLog (err);
-    process.exit (1);
-  })
+  .then( processVersions )
+  .then( updateVersions )
+  .catch( err => {
+    colorLog( err );
+    process.exit( 1 );
+  } )
 ;
