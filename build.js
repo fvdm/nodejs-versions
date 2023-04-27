@@ -51,6 +51,7 @@ async function processVersions ( data ) {
   let result = {
     lts: [],
     current: [],
+    lts_current: [],
   };
 
   console.log( 'Processing versions' );
@@ -79,13 +80,17 @@ async function processVersions ( data ) {
       result.lts.push( version );
     }
 
-    // current versions (including LTS)
-    result.current.push( version );
+    // current versions
+    if ( release.lts > today ) {
+      result.current.push( version );
+    } 
   }
 
-  // sort versions
-  result.current = result.current.sort().reverse();
-  result.lts = result.lts.sort().reverse();
+  result.lts_current = [...lts, ...current];
+
+  for ( let key in result ) {
+    result[key] = result[key].sort().reverse();
+  }  
 
   return result;
 }
@@ -118,8 +123,9 @@ async function write ( filename, data ) {
 
 async function updateVersions ( versions ) {
   const stored = {
-    current: require( './lts-current.json' ),
+    current: require( './current.json' ),
     lts: require( './lts.json' ),
+    lts_current: require( './lts-current.json' ),
   };
 
   // LTS
@@ -140,12 +146,26 @@ async function updateVersions ( versions ) {
   // LTS + current
   process.stdout.write( 'lts-current.json  ' );
 
+  if ( stored.lts_current.toString() === versions.lts_current.toString() ) {
+    console.log( '\u001b[1;32mOK\u001b[0m' );
+  }
+  else {
+    console.log( '\u001b[1;33mOUTDATED\u001b[0m' );
+    write( './lts-current.json', versions.lts_current );
+  }
+
+  colorLog( versions.lts_current );
+  console.log();
+
+  // current
+  process.stdout.write( 'current.json      ' );
+
   if ( stored.current.toString() === versions.current.toString() ) {
     console.log( '\u001b[1;32mOK\u001b[0m' );
   }
   else {
     console.log( '\u001b[1;33mOUTDATED\u001b[0m' );
-    write( './lts-current.json', versions.current );
+    write( './current.json', versions.current );
   }
 
   colorLog( versions.current );

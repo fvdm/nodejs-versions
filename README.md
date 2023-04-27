@@ -15,8 +15,9 @@ supported LTS (active) versions.
 
 file             | stages
 :----------------|:------
-lts.json         | Only LTS
-lts-current.json | LTS + Current
+current.json     | Only current
+lts.json         | Only active LTS
+lts-current.json | LTS + current
 
 
 ## Data source
