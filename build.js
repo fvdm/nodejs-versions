@@ -86,7 +86,7 @@ async function processVersions ( data ) {
     } 
   }
 
-  result.lts_current = [...lts, ...current];
+  result.lts_current = [...result.lts, ...result.current];
 
   for ( let key in result ) {
     result[key] = result[key].sort().reverse();
