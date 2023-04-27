@@ -69,6 +69,11 @@ async function processVersions ( data ) {
       continue;
     }
 
+    // skip maintenance
+    if ( release.maintenance <= today ) {
+      continue;
+    }  
+
     // active LTS status
     if ( release.lts <= today ) {
       result.lts.push( version );
