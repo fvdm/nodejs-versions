@@ -1,8 +1,8 @@
 {
   "author": {
     "name": "Franklin",
-    "email": "info@fvdm.com",
-    "url": "https://fvdm.com"
+    "email": "fr@nkl.in",
+    "url": "https://frankl.in"
   },
   "name": "build",
   "version": "0.1.0",
@@ -17,7 +17,7 @@
   },
   "dependencies": {},
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "license": "Unlicense"
 }
