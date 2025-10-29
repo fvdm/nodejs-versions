@@ -81,7 +81,7 @@ async function processVersions ( data ) {
     }
 
     // current versions
-    if ( release.lts > today ) {
+    if ( ! release.lts || release.lts > today ) {
       result.current.push( version );
     } 
   }
