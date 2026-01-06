@@ -40,11 +40,11 @@ jobs:
           # Read version arrays from JSON files
           LTS_VERSIONS=$(cat lts.json | tr -d '[]"' | tr ',' ' ')
           CURRENT_VERSIONS=$(cat current.json | tr -d '[]"' | tr ',' ' ')
-          
+
           # Format for commit message
           LTS_ARRAY=$(cat lts.json | tr -d '\n')
           CURRENT_ARRAY=$(cat current.json | tr -d '\n')
-          
+
           echo "lts_array=$LTS_ARRAY" >> $GITHUB_OUTPUT
           echo "current_array=$CURRENT_ARRAY" >> $GITHUB_OUTPUT
 
@@ -53,10 +53,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
+
           git add *.json
-          
+
           # Create commit message with version information
-          git commit -m "Update Node.js versions - LTS: ${{ steps.versions.outputs.lts_array }}, Current: ${{ steps.versions.outputs.current_array }}"
-          
+          COMMIT_MSG="Update Node.js versions - "
+          COMMIT_MSG+="LTS: ${{ steps.versions.outputs.lts_array }}, "
+          COMMIT_MSG+="Current: ${{ steps.versions.outputs.current_array }}"
+          git commit -m "$COMMIT_MSG"
+
           git push
