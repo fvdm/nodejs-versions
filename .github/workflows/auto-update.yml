@@ -38,8 +38,8 @@ jobs:
         id: versions
         run: |
           # Format for commit message
-          LTS_ARRAY=$(cat lts.json | tr -d '\n')
-          CURRENT_ARRAY=$(cat current.json | tr -d '\n')
+          LTS_ARRAY=$(tr -d '\n' < lts.json)
+          CURRENT_ARRAY=$(tr -d '\n' < current.json)
 
           echo "lts_array=$LTS_ARRAY" >> $GITHUB_OUTPUT
           echo "current_array=$CURRENT_ARRAY" >> $GITHUB_OUTPUT
