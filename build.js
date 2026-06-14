@@ -72,17 +72,17 @@ async function processVersions ( data ) {
     }
 
     // maintenance
-    if ( release.maintenance > today ) {
+    if ( release.end > today ) {
       result.maint.push( version );
     }
 
     // active LTS status
-    if ( release.maintenance > today && release.lts <= today ) {
+    if ( release.end > today && release.lts <= today ) {
       result.lts.push( version );
     }
 
     // current versions
-    if ( release.maintenance > today && ( ! release.lts || release.lts > today ) ) {
+    if ( release.end > today && ( ! release.lts || release.lts > today ) ) {
       result.current.push( version );
     } 
   }
