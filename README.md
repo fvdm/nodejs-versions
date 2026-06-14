@@ -18,6 +18,7 @@ file             | stages
 current.json     | Only current
 lts.json         | Only active LTS
 lts-current.json | LTS + current
+maint.json       | All in maintenance
 
 
 ## Data source

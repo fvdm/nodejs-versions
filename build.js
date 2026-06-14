@@ -52,6 +52,7 @@ async function processVersions ( data ) {
     lts: [],
     current: [],
     lts_current: [],
+    maint: [],
   };
 
   console.log( 'Processing versions' );
@@ -70,18 +71,18 @@ async function processVersions ( data ) {
       continue;
     }
 
-    // skip maintenance
-    if ( release.maintenance <= today ) {
-      continue;
-    }  
+    // maintenance
+    if ( release.maintenance > today ) {
+      result.maint.push( version );
+    }
 
     // active LTS status
-    if ( release.lts <= today ) {
+    if ( release.maintenance > today && release.lts <= today ) {
       result.lts.push( version );
     }
 
     // current versions
-    if ( ! release.lts || release.lts > today ) {
+    if ( release.maintenance > today && ( ! release.lts || release.lts > today ) ) {
       result.current.push( version );
     } 
   }
@@ -126,14 +127,30 @@ async function updateVersions ( versions ) {
     current: require( './current.json' ),
     lts: require( './lts.json' ),
     lts_current: require( './lts-current.json' ),
+    maint: require( './maint.json' ),
   };
 
-  // LTS
   console.log();
+
+  // maintenance
+  process.stdout.write( 'maint.json        ' );
+
+  if ( stored.maint.toString() === versions.maint.toString() ) {
+    console.log( '\u001b[1;32mOK\u001b[0m' );
+  }
+  else {
+    console.log( '\u001b[1;33mOUTDATED\u001b[0m' );
+  }
+
+  colorLog( versions.maint );
+  console.log();
+
+  // LTS
   process.stdout.write( 'lts.json          ' );
 
   if ( stored.lts.toString() === versions.lts.toString() ) {
     console.log( '\u001b[1;32mOK\u001b[0m' );
+    write( './maint.json', versions.lts );
   }
   else {
     console.log( '\u001b[1;33mOUTDATED\u001b[0m' );
